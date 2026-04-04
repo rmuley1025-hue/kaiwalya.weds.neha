@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaiwalya weds Neha</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Fixed URL encoding (%23 instead of #) so it doesn't break CSS parser */
+    --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
+  }
+  
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  
+  
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cormorant Garamond', serif;
+    background: #2b7a63; /* Main Teal/Green */
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── TEXTURE OVERLAY ── */
+  .texture-overlay {
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  /* ── GLOWING ORBS (Replacing Lanterns) ── */
+  .lantern {
+    position: absolute;
+    pointer-events: none;
+    z-index: 10;
+    animation: floatUp linear infinite;
+    will-change: transform;
+  }
+  .lantern svg { width: 100%; height: 100%; }
+
+  @keyframes floatUp {
+    0%   { transform: translateY(0) rotate(-4deg) scale(0.8); opacity: 0; }
+    5%   { opacity: 0.8; }
+    50%  { transform: translateY(-40vh) rotate(4deg) translateX(20px) scale(1.1); }
+    95%  { opacity: 0.8; }
+    100% { transform: translateY(-85vh) rotate(-2deg) translateX(-10px) scale(0.9); opacity: 0; }
+  }
+
+  /* ── SECTIONS (Removed hard shadows for seamless flow) ── */
+  section {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    /* box-shadow completely removed to prevent hard lines */
+  }
+
+  /* Stacking contexts */
+  #hero { z-index: 7; }
+  #blessing { z-index: 7; }
+  #invite { z-index: 6; }
+  #route { z-index: 5; }
+  #couple { z-index: 4; }
+  #rsvp { z-index: 3; }
+  #things { z-index: 2; }
+  #countdown-section { z-index: 1; }
+
+  /* ── SEAMLESS GRADIENT FADES (Corrected V-Fade Technique) ── */
+  /* By matching the exact same solid color at the bottom of the upper section 
+     and the top of the lower section, the boundary line becomes 100% invisible. */
+
+  /* 1. Hero to Invite (Boundary Color: Navy #16243b) */
+  #hero::after {
+    content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 180px;
+    background: linear-gradient(to bottom, transparent, #16243b);
+    z-index: 1; pointer-events: none;
+  }
+  #invite::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 180px;
+    background: linear-gradient(to bottom, #16243b, transparent);
+    z-index: 1; pointer-events: none;
+  }
+
+  /* 2. Invite to Route (Boundary Color: Navy #16243b) */
+  
+
+  /* 3. Route to Couple (Boundary Color: Cream #f5eeda) */
+  #route::after {
+    content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 180px;
+    background: linear-gradient(to bottom, transparent, #16243b);
+    z-index: 1; pointer-events: none;
+  }
+  #couple::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 180px;
+    background: linear-gradient(to bottom, #16243b, transparent);
+    z-index: 1; pointer-events: none;
+  }
+  
+
+  /* 4. Couple to RSVP (Boundary Color: Emerald #114734) */
+  #couple::after {
+    content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 180px;
+    background: linear-gradient(to bottom, transparent, #114734);
+    z-index: 1; pointer-events: none;
+  }
+  #rsvp::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 180px;
+    background: linear-gradient(to bottom, #114734, transparent);
+    z-index: 1; pointer-events: none;
+  }
+
+  /* 5. RSVP to Things (Boundary Color: Teal #1f735d) */
+  
+
+  /* 6. Things to Countdown (Boundary Color: Midnight #0c1829) */
+  /* 6. Things to Countdown (Boundary Color: Midnight #0c1829) */
+  #things::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 250px;
+    background: linear-gradient(to bottom, rgba(12, 24, 41, 0), rgba(12, 24, 41, 1));
+    z-index: 1; pointer-events: none;
+  }
+  #countdown-section::before {
+    content: ''; position: absolute; top: -2px; left: 0; width: 100%; height: 250px;
+    background: linear-gradient(to bottom, rgba(12, 24, 41, 1), rgba(12, 24, 41, 0));
+    z-index: 1; pointer-events: none;
+  }
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    background-color: #124d3f; 
+    background-image: 
+      linear-gradient(180deg, rgba(18, 77, 63, 0.75) 0%, rgba(24, 94, 78, 0.75) 100%), 
+      var(--paper-texture), 
+      url('header-bg2.png'); 
+     background-size: cover, auto, 950px; 
+    background-repeat: no-repeat, repeat, repeat;
+    background-attachment: fixed;
+    background-blend-mode: multiply, multiply, normal; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px 120px;
+  }
+
+  #hero .mandala-bg {
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23e5c15815' stroke-width='1'%3E%3Ccircle cx='60' cy='60' r='40'/%3E%3Ccircle cx='60' cy='60' r='50'/%3E%3Cpath d='M60 10 L65 20 L75 15 L70 25 L80 30 L70 35 L75 45 L65 40 L60 50 L55 40 L45 45 L50 35 L40 30 L50 25 L45 15 L55 20 Z' opacity='0.5'/%3E%3C/g%3E%3C/svg%3E");
+    background-position: center;
+    background-attachment: fixed;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(11px, 2.5vw, 13px);
+    letter-spacing: 6px;
+    color: #e5c158;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    position: relative; z-index: 2;
+  }
+
+  .hero-names {
+    position: relative; z-index: 2;
+    text-align: center;
+    line-height: 1;
+  }
+
+  .hero-names .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(68px, 15vw, 140px);
+    font-weight: 400;
+    color: #fff9e6;
+    display: block;
+    letter-spacing: 2px;
+  }
+
+  .hero-names .weds {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(13px, 2.5vw, 16px);
+    letter-spacing: 12px;
+    color: #e5c158;
+    display: block;
+    margin: 16px 0;
+  }
+
+  /* ── INVITE SECTION (Using Dark Batik Pattern) ── */
+  #invite {
+    background-color: #16243b;
+    background-image: 
+      linear-gradient(rgba(14, 28, 46, 0.5), rgba(14, 28, 46, 0.5)),
+      var(--paper-texture),
+      url('route_bg.png'); 
+    /* Locking the pattern size to 800px so it matches the route section exactly */
+    background-size: cover, auto, 800px; 
+    background-repeat: no-repeat, repeat, repeat;
+    background-position: center, center, top center;
+    background-attachment: scroll, fixed, fixed; 
+    background-blend-mode: normal, multiply, normal;
+    padding: 80px 24px 120px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Typography reverted to Gold/Cream for dark background */
+  .blessings-text {
+    text-align: center;
+    color: #e0d7bc; /* Pale gold */
+    font-size: clamp(15px, 2vw, 18px);
+    line-height: 2;
+    max-width: 500px;
+    margin-bottom: 40px;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .invite-heading {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(32px, 7vw, 52px);
+    letter-spacing: 8px;
+    color: #e5c158; /* Gold */
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .big-names {
+    text-align: center;
+    margin: 20px 0 40px;
+  }
+
+  .big-names span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(50px, 12vw, 100px);
+    font-weight: 400;
+    color: #fff9e6; /* Cream white */
+    display: block;
+    line-height: 1.1;
+  }
+
+  .big-names .amp {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(40px, 10vw, 80px);
+    color: #e5c158; /* Gold */
+    line-height: 1;
+    margin: 10px 0;
+  }
+
+  /* Override the inline color for the "ON THE FOLLOWING EVENTS" text */
+  #invite > p[style*="color:#7d1e30"] {
+      color: #e5c158 !important; /* Force it back to gold */
+  }
+
+  /* ── ROUTE (Seamless continuation of Invite) ── */
+  #route {
+    background-color: #16243b;
+    background-image: 
+      linear-gradient(rgba(14, 28, 46, 0.6), rgba(14, 28, 46, 0.85)), 
+      var(--paper-texture),
+      url('route_bg.png');
+    /* Must match the background-size of #invite perfectly */
+    background-size: cover, auto, 800px; 
+    background-repeat: no-repeat, repeat, repeat;
+    background-position: center, center, top center;
+    background-attachment: scroll, fixed, fixed;
+    background-blend-mode: normal, multiply, normal;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    gap: 40px;
+  }
+
+  /* ── EVENT CARDS (Elegant Cream to contrast the dark navy background) ── */
+  /* ── EVENT CARDS (Responsive Grid) ── */
+  .events-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* 1 column for mobile by default */
+    gap: 40px;
+    max-width: 900px; /* Widened to fit two columns nicely */
+    width: 100%;
+    z-index: 2;
+  }
+
+  /* 2-column layout for tablets and desktops */
+  @media (min-width: 768px) {
+    .events-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .event-card {
+    position: relative;
+    background: #f5eeda; /* Rich Pale Cream */
+    border-radius: 200px;
+    width: 100%;
+    aspect-ratio: 3/4;
+    padding: 60px 30px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5); /* Stronger shadow to pop off dark bg */
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .event-card::before {
+    content: ''; position: absolute; inset: 12px;
+    border: 2px solid #7d1e30; /* Ruby Maroon border */
+    border-radius: 190px; pointer-events: none;
+  }
+  .event-card::after {
+    content: ''; position: absolute; inset: 18px;
+    border: 1px solid rgba(125, 30, 48, 0.4); 
+    border-radius: 180px; pointer-events: none;
+  }
+  .event-card:hover { transform: translateY(-6px); }
+
+  .floral-cluster {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    z-index: 5;
+  }
+  .floral-cluster.top-right {
+    top: -15px; right: -10px; transform: rotate(15deg);
+  }
+  .floral-cluster.bottom-left {
+    bottom: -15px; left: -10px; transform: rotate(195deg);
+  }
+
+  .event-card .event-name {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(20px, 5vw, 26px);
+    letter-spacing: 4px;
+    color: #124d3f; /* Deep Teal text */
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .event-card .event-date {
+    font-size: 16px;
+    color: #7d1e30; /* Ruby Maroon text */
+    font-weight: 600;
+    line-height: 1.8;
+  }
+
+  .event-card .see-route {
+    display: inline-block;
+    margin-top: 24px;
+    font-size: 12px;
+    color: #b58d28; /* Gold accent */
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #b58d28;
+    padding-bottom: 2px;
+    cursor: pointer;
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+  }
+
+
+  /* ── ROUTE (Floral Pattern Background) ── */
+  
+
+  .section-heading {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 6vw, 48px);
+    letter-spacing: 6px;
+    text-align: center;
+    color: #e5c158;
+  }
+
+  .section-heading1{
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 6vw, 48px);
+    letter-spacing: 6px;
+    text-align: center;
+    color: #e5c158;
+    margin-top: 200px;
+  }
+  .map-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: transparent;
+    border: 1.5px solid #e5c158;
+    color: #e5c158;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    padding: 14px 32px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .map-btn:hover { background: #e5c15822; }
+
+  .map-btn .circle-icon {
+    width: 28px; height: 28px;
+    border: 1.5px solid #e5c158;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+
+  .divine-figure {
+    width: min(280px, 70vw);
+    height: auto;
+    margin-top: 20px;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+  }
+
+  /* ── MEET COUPLE ── */
+  /* ── COUPLE (Light Cream Floral Background) ── */
+  #couple {
+    min-height: 100vh;
+    background-color: #124d3f; 
+    background-image: 
+      linear-gradient(180deg, rgba(18, 77, 63, 0.75) 0%, rgba(24, 94, 78, 0.75) 100%), 
+      var(--paper-texture), 
+      url('header-bg2.png'); 
+     background-size: cover, auto, 950px; 
+    background-repeat: no-repeat, repeat, repeat;
+    background-attachment: fixed;
+    background-blend-mode: multiply, multiply, normal; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px 120px;
+  }
+
+  .meet-label {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #b58d28; 
+    font-weight: 600;
+    position: relative; z-index: 2;
+  }
+
+  .couple-heading {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(38px, 9vw, 55px);
+    text-align: center;
+    line-height: 1.3;
+    letter-spacing: 4px;
+    color: #fff9e6;
+    position: relative; z-index: 2;
+  }
+
+  .couple-message {
+    max-width: 600px;
+    text-align: center;
+    font-size: 22px;
+    line-height: 1.9;
+    font-style: italic;
+    color: #4a9c83; 
+    font-weight: 600;
+    position: relative; z-index: 2;
+  }
+
+  /* ── RSVP (Emerald with Original Header Background) ── */
+  #rsvp {
+    background-color: #1f735d;
+    background-image: 
+      linear-gradient(rgba(31, 115, 93, 0.85), rgba(31, 115, 93, 0.85)), /* Teal wash */
+      var(--paper-texture),
+      url('header-bg.png'); /* Continuous from RSVP */
+    background-size: cover, auto, cover;
+    background-repeat: no-repeat, repeat, no-repeat;
+    background-position: center, center, center;
+    background-attachment: scroll, fixed, fixed;
+    background-blend-mode: normal, multiply, normal;
+    padding: 80px 24px 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+    z-index: 2;
+  }
+
+  .rsvp-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #e5c158;
+    color: #184f3e;
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    letter-spacing: 4px;
+    padding: 16px 48px;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative; z-index: 2;
+  }
+  .rsvp-btn:hover { transform: scale(1.04); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+
+  /* ── THINGS TO KNOW (Teal with Original Header Background) ── */
+  #things {
+    background-color: #1f735d;
+    background-image: 
+      linear-gradient(rgba(31, 115, 93, 0.85), rgba(31, 115, 93, 0.85)), /* Teal wash */
+      var(--paper-texture),
+      url('header-bg.png'); /* Continuous from RSVP */
+    background-size: cover, auto, cover;
+    background-repeat: no-repeat, repeat, no-repeat;
+    background-position: center, center, center;
+    background-attachment: scroll, fixed, fixed;
+    background-blend-mode: normal, multiply, normal;
+    padding: 80px 24px 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+    min-height: 80vh;
+    z-index: 2;
+  }
+
+  .info-icons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 40px;
+    max-width: 640px;
+    width: 100%;
+    position: relative; z-index: 2;
+  }
+
+  .info-item {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .info-icon {
+    width: 60px;
+    height: 60px;
+    background: transparent;
+    border: 1.5px solid #e5c158;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #e5c158;
+  }
+
+  .info-label {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: #e5c158;
+    text-transform: uppercase;
+  }
+
+  .info-desc {
+    font-size: 15px;
+    color: #c9e4d5;
+    line-height: 1.6;
+    max-width: 160px;
+  }
+
+  /* ── COUNTDOWN & TEMPLE GOPURAM ── */
+  #countdown-section {
+    background-color: #16243b;
+    background-image: 
+      linear-gradient(rgba(14, 28, 46, 0.6), rgba(14, 28, 46, 0.85)), 
+      var(--paper-texture),
+      url('route_bg.png');
+    /* Must match the background-size of #invite perfectly */
+    background-size: cover, auto, 800px; 
+    background-repeat: no-repeat, repeat, repeat;
+    background-position: center, center, top center;
+    background-attachment: scroll, fixed, fixed;
+    background-blend-mode: normal, multiply, normal;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    gap: 40px;
+  }
+
+  .temple-gopuram {
+    width: min(400px, 90vw);
+    height: auto;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5));
+  }
+
+  .countdown-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(22px, 4vw, 30px);
+    color: #e5c158;
+    letter-spacing: 4px;
+    text-align: center;
+    position: relative; z-index: 2;
+  }
+
+  .countdown-timer {
+    display: flex;
+    gap: 0;
+    position: relative; z-index: 2;
+    align-items: flex-start;
+  }
+
+  .countdown-unit {
+    text-align: center;
+    padding: 0 20px;
+    border-right: 1px solid #e5c15844;
+  }
+  .countdown-unit:last-child { border-right: none; }
+
+  .countdown-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 8vw, 70px);
+    font-weight: 300;
+    color: #fff9e6;
+    line-height: 1;
+    display: block;
+  }
+
+  .countdown-word {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #e5c158aa;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 8px;
+  }
+
+  .lantern-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 5;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 600px) {
+    .countdown-unit { padding: 0 10px; }
+    .info-icons { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ── BLESSING SECTION (Compact & Seamless Bridge) ── */
+  /* ── BLESSING SECTION (Elegant & Prominent Bridge) ── */
+  #blessing {
+    background-color: #16243b; 
+    padding: 30px 24px; /* Added a bit more padding so the larger image doesn't feel cramped */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 7;
+  }
+
+  .blessing-ganesha {
+    width: min(200px, 50vw); /* Made the image much larger, but still acts as a separator */
+    height: auto;
+    filter: drop-shadow(0 12px 30px rgba(0,0,0,0.5)); 
+    position: relative;
+    z-index: 2;
+  }
+
+  .blessing-text {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(13px, 3vw, 16px); /* Increased the text size to match the bigger image */
+    letter-spacing: 6px;
+    color: #e5c158; 
+    margin-top: 24px; /* Added a bit more space above the text */
+    text-transform: uppercase;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+</style>
+</head>
+<body>
+<div class="texture-overlay"></div>
+
+<section id="hero">
+  <div class="mandala-bg"></div>
+  <div class="lantern-layer" id="hero-lanterns"></div>
+
+  <img src="gopuram-day.png" alt="Lord Ganesha" class="ganesh-hero reveal" style="width: 600px; height: auto;">
+
+  <div class="hero-subtitle reveal" style="transition-delay:0.2s">With celestial blessings</div>
+  
+  <div class="hero-names reveal" style="transition-delay:0.4s">
+    <span class="name">Kaiwalya</span>
+    <span class="weds">WEDS</span>
+    <span class="name">Neha</span>
+  </div>
+</section>
+<section id="blessing">
+  <img src="ganesha1.png" alt="Shree Ganeshay Namah" class="blessing-ganesha reveal">
+  <div class="blessing-text reveal" style="transition-delay:0.2s">Shree Ganeshay Namah</div>
+</section>
+<section id="invite">
+  <div class="lantern-layer" id="invite-lanterns"></div>
+
+  <div class="blessings-text reveal">
+    With the heavenly blessings of<br>
+    <em>Smt. Kamla Devi & Shri Mohan Sharma</em><br>
+    ——<br>
+    Mrs. Sunita & Mr. Deepak Sharma
+  </div>
+
+  <div class="invite-heading reveal" style="transition-delay:0.1s">INVITE</div>
+  <p class="blessings-text reveal" style="transition-delay:0.2s" style="font-style:normal; font-size:16px;">You to join us in the wedding celebrations of</p>
+
+  <div class="big-names reveal" style="transition-delay:0.3s">
+    <span>Kaiwalya</span>
+    <div class="amp">&</div>
+    <span>Neha</span>
+  </div>
+
+  <p class="blessings-text reveal" style="transition-delay:0.4s" style="margin-bottom: 60px;">
+    Daughter of<br>
+    <em>Mrs. Anita & Mr. Vikram Malhotra</em>
+  </p>
+
+  <svg width="0" height="0" class="hidden">
+    <defs>
+      <g id="flower-group">
+        <circle cx="45" cy="45" r="30" fill="#e5c158" opacity="0.3"/>
+        <path d="M45 20 C55 5 70 20 55 35 C70 30 85 45 70 55 C85 70 70 85 55 70 C70 85 55 100 45 80 C35 100 20 85 35 70 C20 85 5 70 20 55 C5 45 20 30 35 35 C20 20 35 5 45 20 Z" fill="#e5c158"/>
+        <circle cx="45" cy="45" r="8" fill="#a87f28"/>
+        <circle cx="20" cy="20" r="10" fill="#e5c158" opacity="0.8"/>
+        <circle cx="70" cy="70" r="15" fill="#e5c158" opacity="0.6"/>
+      </g>
+    </defs>
+  </svg>
+
+  <p style="font-family:'Cinzel',serif; letter-spacing:4px; font-size:14px; color:#e5c158; margin-bottom:40px" class="reveal" style="transition-delay:0.5s">ON THE FOLLOWING EVENTS</p>
+
+  <div class="events-grid reveal" style="transition-delay:0.6s">
+    <div class="event-card">
+      <svg class="floral-cluster top-right" viewBox="0 0 90 90"><use href="#flower-group"/></svg>
+      <div class="event-name">Simaanta Pujan</div>
+      <div class="event-date">Saturday, April 19th 2025<br>Rambagh Palace, Jaipur<br>7pm Onwards</div>
+      <span class="see-route">Location ↗</span>
+      <svg class="floral-cluster bottom-left" viewBox="0 0 90 90"><use href="#flower-group"/></svg>
+    </div>
+    <div class="event-card">
+      <svg class="floral-cluster top-right" viewBox="0 0 90 90"><use href="#flower-group"/></svg>
+      <div class="event-name">Sangeet</div>
+      <div class="event-date">Friday, April 18th 2025<br>Rambagh Palace, Jaipur<br>6pm Onwards</div>
+      <span class="see-route">Location ↗</span>
+      <svg class="floral-cluster bottom-left" viewBox="0 0 90 90"><use href="#flower-group"/></svg>
+    </div>
+    
+    <div class="event-card">
+      <svg class="floral-cluster top-right" viewBox="0 0 90 90"><use href="#flower-group"/></svg>
+      <div class="event-name">Haldi</div>
+      <div class="event-date">Saturday, April 19th 2025<br>Rambagh Palace, Jaipur<br>10am Onwards</div>
+      <span class="see-route">Location ↗</span>
+      <svg class="floral-cluster bottom-left" viewBox="0 0 90 90"><use href="#flower-group"/></svg>
+    </div>
+
+
+    <div class="event-card">
+      <svg class="floral-cluster top-right" viewBox="0 0 90 90"><use href="#flower-group"/></svg>
+      <div class="event-name">Muhurtham</div>
+      <div class="event-date">Sunday, April 20th 2025<br>Rambagh Palace, Jaipur<br>11am Onwards</div>
+      <span class="see-route">Location ↗</span>
+      <svg class="floral-cluster bottom-left" viewBox="0 0 90 90"><use href="#flower-group"/></svg>
+    </div>
+  </div>
+</section>
+
+<section id="route">
+  <div class="section-heading reveal">SEE THE<br>ROUTE</div>
+  <button class="map-btn reveal" style="transition-delay:0.2s" onclick="window.open('https://maps.google.com','_blank')">
+    <div class="circle-icon">◎</div>
+    OPEN MAP
+  </button>
+
+  <svg class="divine-figure reveal" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 60 L180 60" stroke="#e5c158" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="40" cy="60" r="6" fill="#e5c158"/>
+    <circle cx="60" cy="60" r="4" fill="#184f3e" stroke="#e5c158" stroke-width="2"/>
+    <circle cx="80" cy="60" r="4" fill="#184f3e" stroke="#e5c158" stroke-width="2"/>
+    <circle cx="100" cy="60" r="4" fill="#184f3e" stroke="#e5c158" stroke-width="2"/>
+    <path d="M140 60 C140 20 180 10 190 40 C200 70 160 90 140 60 Z" fill="#e5c15822" stroke="#e5c158" stroke-width="2"/>
+    <ellipse cx="165" cy="50" rx="8" ry="12" fill="#e5c158" transform="rotate(30 165 50)"/>
+    <ellipse cx="165" cy="50" rx="3" ry="6" fill="#184f3e" transform="rotate(30 165 50)"/>
+  </svg>
+</section>
+
+<section id="couple">
+  <div class="lantern-layer" id="couple-lanterns"></div>
+  <p class="meet-label reveal">MEET THE</p>
+  <h2 class="couple-heading reveal" style="transition-delay:0.2s">BRIDE AND<br>GROOM</h2>
+
+  <p class="couple-message reveal" style="transition-delay:0.4s">
+    We are both so delighted that you are able to join us in celebrating what we hope will be one of the happiest days of our lives.<br><br>
+    The affection shown towards us by so many people since our engagement has been incredibly moving, and has touched us both deeply. We would like to take this opportunity to thank everyone most sincerely for their kindness.
+  </p>
+</section>
+
+<section id="rsvp">
+  <div class="lantern-layer" id="rsvp-lanterns"></div>
+  <h2 class="section-heading1 reveal">PLEASE<br>RSVP</h2>
+  <p style="font-family:'Cinzel',serif; font-size:14px; letter-spacing:3px; color:#c9e4d5;" class="reveal" style="transition-delay:0.2s">Click below to message on WhatsApp</p>
+  <a class="rsvp-btn reveal" style="transition-delay:0.4s" href="#" target="_blank">
+    RSVP NOW
+  </a>
+</section>
+
+<section id="things">
+  <h2 class="section-heading reveal">THINGS TO<br>KNOW</h2>
+  <p class="couple-message reveal" style="transition-delay:0.2s">
+    To help you feel at ease and enjoy every moment of the celebrations, we've gathered a few thoughtful details we'd love for you to know before the big day.
+  </p>
+
+  <div class="info-icons reveal" style="transition-delay:0.3s">
+    <div class="info-item">
+      <div class="info-icon">#</div>
+      <div class="info-label">Hashtag</div>
+      <div class="info-desc">Share photos with<br>#KaiwalyaWedsNeha</div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">🌤</div>
+      <div class="info-label">Weather</div>
+      <div class="info-desc">Sunny, around 32°C</div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">🏨</div>
+      <div class="info-label">Stay</div>
+      <div class="info-desc">Rooms reserved for outstation guests</div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">🚗</div>
+      <div class="info-label">Parking</div>
+      <div class="info-desc">Valet parking available</div>
+    </div>
+  </div>
+
+  <div class="reveal" style="transition-delay:0.5s; text-align:center; margin-top:40px;">
+    <div class="section-heading">FOLLOW<br>THE ACTION</div>
+    <p style="font-family:'Cinzel',serif; font-size:12px; letter-spacing:3px; color:#c9e4d5; margin:16px 0">Click to open our Instagram page</p>
+    <a class="rsvp-btn" href="#" target="_blank" style="display:inline-flex; border-color:#e5c158; ">
+      📸 @KaiwalyaAndNeha
+    </a>
+  </div>
+</section>
+
+<section id="countdown-section">
+  <div class="lantern-layer" id="countdown-lanterns"></div>
+
+  <img src="gopuram.png" alt="Temple Gopuram" class="temple-gopuram reveal" style="width: min(700px, 95vw); mix-blend-mode: lighten;">
+
+  <p class="countdown-label reveal">The countdown begins</p>
+
+  <div class="countdown-timer reveal" style="transition-delay:0.2s">
+    <div class="countdown-unit">
+      <span class="countdown-num" id="days">00</span>
+      <span class="countdown-word">Days</span>
+    </div>
+    <div class="countdown-unit">
+      <span class="countdown-num" id="hours">00</span>
+      <span class="countdown-word">Hours</span>
+    </div>
+    <div class="countdown-unit">
+      <span class="countdown-num" id="minutes">00</span>
+      <span class="countdown-word">Mins</span>
+    </div>
+    <div class="countdown-unit">
+      <span class="countdown-num" id="seconds">00</span>
+      <span class="countdown-word">Secs</span>
+    </div>
+  </div>
+</section>
+
+<script>
+// ── GLOWING ORBS ──
+function createLantern(container) {
+  const svg = `<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="lg${Math.random().toString(36).slice(2)}" cx="50%" cy="50%">
+        <stop offset="0%" stop-color="#e5c158" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="#e5c158" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <circle cx="20" cy="20" r="20" fill="url(#lg${Math.random().toString(36).slice(2)})"/>
+    <circle cx="20" cy="20" r="4" fill="#fff9e6"/>
+  </svg>`;
+
+  const div = document.createElement('div');
+  div.className = 'lantern';
+  const size = 20 + Math.random() * 30;
+  div.style.cssText = `
+    width: ${size}px;
+    height: ${size}px;
+    left: ${Math.random() * 95}%;
+    bottom: -60px;
+    animation-duration: ${7 + Math.random() * 10}s;
+    animation-delay: ${Math.random() * 8}s;
+    opacity: 0;
+  `;
+  div.innerHTML = svg;
+  container.appendChild(div);
+  return div;
+}
+
+const lanternContainers = ['hero-lanterns','invite-lanterns','couple-lanterns','rsvp-lanterns','countdown-lanterns'];
+lanternContainers.forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  for (let i = 0; i < 12; i++) createLantern(el);
+});
+
+// ── SCROLL REVEAL ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// ── COUNTDOWN ──
+const weddingDate = new Date('2025-04-20T11:00:00+05:30');
+function updateCountdown() {
+  const now = new Date();
+  const diff = weddingDate - now;
+  if (diff <= 0) {
+    document.getElementById('days').textContent = '00';
+    document.getElementById('hours').textContent = '00';
+    document.getElementById('minutes').textContent = '00';
+    document.getElementById('seconds').textContent = '00';
+    return;
+  }
+  const days = Math.floor(diff / 86400000);
+  const hrs = Math.floor((diff % 86400000) / 3600000);
+  const mins = Math.floor((diff % 3600000) / 60000);
+  const secs = Math.floor((diff % 60000) / 1000);
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('days').textContent = pad(days);
+  document.getElementById('hours').textContent = pad(hrs);
+  document.getElementById('minutes').textContent = pad(mins);
+  document.getElementById('seconds').textContent = pad(secs);
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// ── PARALLAX ORBS on scroll ──
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  document.querySelectorAll('.lantern').forEach(l => {
+    const extra = scrollY * 0.03 * (Math.random() > 0.5 ? 1 : -1);
+    l.style.transform = `translateY(${extra}px)`;
+  });
+}, { passive: true });
+</script>
+</body>
+</html>
