@@ -558,9 +558,9 @@ body.mr .scroll-indicator .scroll-label {
 }
 
 @keyframes scrollDot {
-  0%   { top: 5px;  opacity: 1;   height: 8px; }
-  60%  { top: 18px; opacity: 0.2; height: 4px; }
-  100% { top: 5px;  opacity: 0;   height: 8px; }
+  0%   { top: 18px; opacity: 1;   height: 8px; }
+  60%  { top: 5px;  opacity: 0.2; height: 4px; }
+  100% { top: 18px; opacity: 0;   height: 8px; }
 }
 
 /* Animated chevron arrows below the mouse */
@@ -577,7 +577,7 @@ body.mr .scroll-indicator .scroll-label {
   height: 12px;
   border-right: 2px solid #e5c158;
   border-bottom: 2px solid #e5c158;
-  transform: rotate(45deg);
+  transform: rotate(225deg);   /* ← was 45deg */
   opacity: 0;
   animation: arrowFade 1.6s ease-in-out infinite;
 }
@@ -587,9 +587,9 @@ body.mr .scroll-indicator .scroll-label {
 .scroll-arrows span:nth-child(3) { animation-delay: 0.4s; }
 
 @keyframes arrowFade {
-  0%   { opacity: 0;   transform: rotate(45deg) translateY(-4px); }
+  0%   { opacity: 0;   transform: rotate(225deg) translateY(-4px); }
   40%  { opacity: 0.9; }
-  80%  { opacity: 0;   transform: rotate(45deg) translateY(4px); }
+  80%  { opacity: 0;   transform: rotate(225deg) translateY(4px); }
   100% { opacity: 0; }
 }
 </style>
@@ -1222,15 +1222,15 @@ window.addEventListener('scroll', () => {
 
 <!-- SCROLL DOWN INDICATOR -->
 <div class="scroll-indicator" id="scroll-indicator">
-  <div class="scroll-mouse"></div>
   <div class="scroll-arrows">
     <span></span>
     <span></span>
     <span></span>
   </div>
+  <div class="scroll-mouse"></div>
   <p class="scroll-label">
-    <span class="lang-mr">खाली स्क्रोल करा</span>
-    <span class="lang-en">Scroll Down</span>
+    <span class="lang-mr">वर स्वाईप करा ↑</span>
+    <span class="lang-en">Swipe Up ↑</span>
   </p>
 </div>
 </body>
