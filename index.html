@@ -134,7 +134,13 @@
     100% { transform: translateY(-85vh) rotate(-2deg) translateX(-10px) scale(0.9); opacity: 0; }
   }
 
-  section { position: relative; width: 100%; overflow: hidden; }
+  section { position: relative; width: 100%; overflow: hidden; contain: layout style; }
+
+  /* Mobile touch performance */
+  html {
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
 
   #hero { z-index: 7; } #blessing { z-index: 7; } #invite { z-index: 6; }
   #route { z-index: 5; } #couple { z-index: 4; } #rsvp { z-index: 3; }
@@ -177,16 +183,18 @@
     background-image: linear-gradient(180deg, rgba(18, 77, 63, 0.75) 0%, rgba(24, 94, 78, 0.75) 100%), var(--paper-texture), url('header-bg2.webp'); 
     background-size: cover, auto, 950px; 
     background-repeat: no-repeat, repeat, repeat;
-    background-attachment: fixed;
+    background-attachment: scroll;
     background-blend-mode: multiply, multiply, normal; 
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     padding: 80px 24px 120px;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
   }
 
   #hero .mandala-bg {
     position: absolute; inset: 0;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23e5c15815' stroke-width='1'%3E%3Ccircle cx='60' cy='60' r='40'/%3E%3Ccircle cx='60' cy='60' r='50'/%3E%3Cpath d='M60 10 L65 20 L75 15 L70 25 L80 30 L70 35 L75 45 L65 40 L60 50 L55 40 L45 45 L50 35 L40 30 L50 25 L45 15 L55 20 Z' opacity='0.5'/%3E%3C/g%3E%3C/svg%3E");
-    background-position: center; background-attachment: fixed;
+    background-position: center;
   }
 
   /* ── GOPURAM TAP INTERACTION ── */
@@ -369,7 +377,7 @@
     background-color: #16243b;
     background-image: linear-gradient(rgba(14, 28, 46, 0.5), rgba(14, 28, 46, 0.5)), var(--paper-texture), url('route_bg.webp'); 
     background-size: cover, auto, 800px; background-repeat: no-repeat, repeat, repeat;
-    background-position: center, center, top center; background-attachment: scroll, fixed, fixed; 
+    background-position: center, center, top center; background-attachment: scroll; 
     background-blend-mode: normal, multiply, normal; padding: 80px 24px 120px; min-height: 100vh;
     display: flex; flex-direction: column; align-items: center;
   }
@@ -383,7 +391,7 @@
   #route, #countdown-section {
     background-color: #16243b; background-image: linear-gradient(rgba(14, 28, 46, 0.6), rgba(14, 28, 46, 0.85)), var(--paper-texture), url('route_bg.webp');
     background-size: cover, auto, 800px; background-repeat: no-repeat, repeat, repeat;
-    background-position: center, center, top center; background-attachment: scroll, fixed, fixed;
+    background-position: center, center, top center; background-attachment: scroll;
     background-blend-mode: normal, multiply, normal; min-height: 60vh;
     display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 24px; gap: 40px;
   }
@@ -427,7 +435,7 @@
   #couple {
     min-height: 50vh; background-color: #124d3f; 
     background-image: linear-gradient(180deg, rgba(18, 77, 63, 0.75) 0%, rgba(24, 94, 78, 0.75) 100%), var(--paper-texture), url('header-bg2.webp'); 
-    background-size: cover, auto, 950px; background-repeat: no-repeat, repeat, repeat; background-attachment: fixed;
+    background-size: cover, auto, 950px; background-repeat: no-repeat, repeat, repeat; background-attachment: scroll;
     background-blend-mode: multiply, multiply, normal; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 24px 60px;
   }
   .couple-subheading { font-size: clamp(14px, 3vw, 18px); letter-spacing: 4px; color: #bab5a6; text-transform: uppercase; margin-bottom: 8px; text-align: center; position: relative; z-index: 2; }
@@ -439,7 +447,7 @@
   #rsvp, #things {
     background-color: #1f735d; background-image: linear-gradient(rgba(31, 115, 93, 0.85), rgba(31, 115, 93, 0.85)), var(--paper-texture), url('header-bg.webp'); 
     background-size: cover, auto, cover; background-repeat: no-repeat, repeat, no-repeat;
-    background-position: center, center, center; background-attachment: scroll, fixed, fixed;
+    background-position: center, center, center; background-attachment: scroll;
     background-blend-mode: normal, multiply, normal; padding: 40px 24px 100px; display: flex; flex-direction: column; align-items: center; gap: 20px; z-index: 2;
   }
   #things { min-height: 80vh; }
@@ -464,9 +472,20 @@
   .countdown-num { font-size: clamp(40px, 8vw, 70px); font-weight: 300; color: #fff9e6; line-height: 1; display: block; }
   .countdown-word { font-size: 11px; letter-spacing: 3px; color: #e5c158aa; text-transform: uppercase; display: block; margin-top: 8px; }
 
-  .lantern-layer { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 5; }
+  .lantern-layer { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 5; contain: strict; }
   .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── PERFORMANCE: skip rendering off-screen sections ── */
+  #invite, #route, #couple, #rsvp, #things, #countdown-section {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 600px;
+  }
+
+  /* ── PERFORMANCE: image render hints ── */
+  img {
+    image-rendering: auto;
+  }
 
   @media (max-width: 600px) {
     .countdown-unit { padding: 0 10px; }
@@ -626,7 +645,7 @@ body.mr .scroll-indicator .scroll-label {
   <div class="lantern-layer" id="hero-lanterns"></div>
 
   <div class="ganesh-hero-wrap" id="gopuram-tap">
-    <img src="gopuram-day.webp" alt="Lord Ganesha" class="ganesh-hero">
+    <img src="gopuram-day.webp" alt="Lord Ganesha" class="ganesh-hero" decoding="async">
     
     <div class="play-btn-glass" id="play-btn-hint">
       <svg class="play-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -662,7 +681,7 @@ body.mr .scroll-indicator .scroll-label {
 </section>
 
 <section id="blessing">
-  <img src="ganesha1.webp" alt="Shree Ganeshay Namah" class="blessing-ganesha reveal">
+  <img src="ganesha1.webp" alt="Shree Ganeshay Namah" class="blessing-ganesha reveal" decoding="async" loading="lazy">
   <div class="blessing-text reveal" style="transition-delay:0.2s">
     <span class="lang-en">Shree Ganeshay Namah</span>
     <span class="lang-mr">श्री गणेशाय नमः</span>
@@ -974,7 +993,7 @@ body.mr .scroll-indicator .scroll-label {
 <section id="countdown-section">
   <div class="lantern-layer" id="countdown-lanterns"></div>
 
-  <img src="gopuram.webp" alt="Temple Gopuram" class="temple-gopuram reveal" style="width: min(700px, 95vw); mix-blend-mode: lighten;">
+  <img src="gopuram.webp" alt="Temple Gopuram" class="temple-gopuram reveal" style="width: min(700px, 95vw); mix-blend-mode: lighten;" decoding="async" loading="lazy">
 
   <p class="countdown-label reveal">
     <span class="lang-en">The countdown begins</span>
@@ -1168,10 +1187,11 @@ function createLantern(container) {
 }
 
 const lanternContainers = ['hero-lanterns','invite-lanterns','couple-lanterns','rsvp-lanterns','countdown-lanterns'];
+const lanternCount = window.innerWidth < 768 ? 6 : 12; // Half on mobile for performance
 lanternContainers.forEach(id => {
   const el = document.getElementById(id);
   if (!el) return;
-  for (let i = 0; i < 12; i++) createLantern(el);
+  for (let i = 0; i < lanternCount; i++) createLantern(el);
 });
 
 // ── SCROLL REVEAL ──
@@ -1210,13 +1230,27 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// ── PARALLAX ORBS on scroll ──
+// ── PARALLAX ORBS on scroll — throttled via requestAnimationFrame ──
+let _scrollTicking = false;
+let _lastScrollY = 0;
+const _lanternList = [];
+// Pre-cache all lanterns and their random direction so we never call Math.random in scroll
+document.querySelectorAll('.lantern').forEach(l => {
+  _lanternList.push({ el: l, dir: Math.random() > 0.5 ? 1 : -1 });
+});
+
 window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  document.querySelectorAll('.lantern').forEach(l => {
-    const extra = scrollY * 0.03 * (Math.random() > 0.5 ? 1 : -1);
-    l.style.transform = `translateY(${extra}px)`;
-  });
+  _lastScrollY = window.scrollY;
+  if (!_scrollTicking) {
+    _scrollTicking = true;
+    requestAnimationFrame(() => {
+      const extra = _lastScrollY * 0.03;
+      _lanternList.forEach(({ el, dir }) => {
+        el.style.transform = `translateY(${extra * dir}px)`;
+      });
+      _scrollTicking = false;
+    });
+  }
 }, { passive: true });
 </script>
 
