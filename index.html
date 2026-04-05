@@ -1118,22 +1118,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollIndicator = document.getElementById('scroll-indicator');
     scrollIndicator.classList.add('visible');
 
-    // 6. Auto-scroll smoothly after a short delay
-    setTimeout(() => {
-      window.scrollBy({
-        top: window.innerHeight * 0.55,
-        behavior: 'smooth'
-      });
-    }, 50);
+    // 6. Continuous auto-scroll via rAF — stops the moment the user touches/wheels/keys
+    let autoScrollRAF = null;
+    let autoScrollActive = false;
+    const AUTO_SCROLL_SPEED = 0.6; // px per frame (~36px/s at 60fps)
 
-    // Hide indicator only on REAL user scroll (after programmatic scroll settles)
+    function stopAutoScroll() {
+      if (!autoScrollActive) return;
+      autoScrollActive = false;
+      if (autoScrollRAF) { cancelAnimationFrame(autoScrollRAF); autoScrollRAF = null; }
+      scrollIndicator.classList.add('gone');
+      window.removeEventListener('touchstart',  stopAutoScroll);
+      window.removeEventListener('wheel',       stopAutoScroll);
+      window.removeEventListener('keydown',     stopAutoScroll);
+      window.removeEventListener('pointerdown', stopAutoScroll);
+    }
+
+    function autoScrollStep() {
+      if (!autoScrollActive) return;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (window.scrollY >= maxScroll) { stopAutoScroll(); return; }
+      window.scrollBy(0, AUTO_SCROLL_SPEED);
+      autoScrollRAF = requestAnimationFrame(autoScrollStep);
+    }
+
     setTimeout(() => {
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 80) {
-          scrollIndicator.classList.add('gone');
-        }
-      }, { passive: true, once: true });
-    }, 1200); // wait for the smooth auto-scroll to finish before listening
+      autoScrollActive = true;
+      window.addEventListener('touchstart',  stopAutoScroll, { passive: true, once: true });
+      window.addEventListener('wheel',       stopAutoScroll, { passive: true, once: true });
+      window.addEventListener('keydown',     stopAutoScroll, { once: true });
+      window.addEventListener('pointerdown', stopAutoScroll, { passive: true, once: true });
+      autoScrollRAF = requestAnimationFrame(autoScrollStep);
+    }, 900);
   }
   
   // Bind to 'click' for maximum audio compatibility on mobile devices
