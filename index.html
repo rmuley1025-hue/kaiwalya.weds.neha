@@ -1032,6 +1032,80 @@ body.mr .scroll-indicator .scroll-label {
   </div>
 </section>
 
+<!-- ── PERSONAL FOOTER ── -->
+<style>
+  .personal-footer {
+    background-color: #0a1628;
+    padding: 32px 24px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid rgba(229, 193, 88, 0.12);
+    position: relative;
+    z-index: 2;
+  }
+
+  .personal-footer .divider-ornament {
+    font-size: 18px;
+    color: rgba(229, 193, 88, 0.4);
+    letter-spacing: 8px;
+    margin-bottom: 4px;
+  }
+
+  .personal-footer .footer-note {
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.85;
+    color: rgba(224, 215, 188, 0.55);
+    max-width: 480px;
+  }
+
+  .personal-footer .footer-note.mr-note {
+    font-family: 'Tiro Devanagari Marathi', serif;
+    font-size: 14px;
+  }
+
+  .personal-footer .footer-author {
+    margin-top: 6px;
+    font-size: 12px;
+    color: rgba(229, 193, 88, 0.45);
+    letter-spacing: 2px;
+    text-align: center;
+  }
+
+  .personal-footer .footer-author a {
+    color: rgba(229, 193, 88, 0.65);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(229, 193, 88, 0.25);
+    padding-bottom: 1px;
+    transition: color 0.3s ease, border-color 0.3s ease;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 2px;
+  }
+
+  .personal-footer .footer-author a:hover {
+    color: #e5c158;
+    border-color: rgba(229, 193, 88, 0.7);
+  }
+</style>
+
+<footer class="personal-footer">
+  <div class="divider-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+  <p class="footer-note mr-note lang-mr">
+    कैवल्य दादा आणि वहिनी, तुमच्यासाठी हि माझी छोटीशी प्रेमाची भेट आहे —<br>
+    तुमचं हे नवीन आयुष्य सुखाने भरलेलं असो. ♡
+  </p>
+  <p class="footer-note lang-en">
+    Kaiwalya Dada & Vahini, this little website is my gift to you both —<br>my small token of love, made with heart. May your new journey be beautiful. ♡
+  </p>
+
+  <p class="footer-author">
+    — with love, <a href="https://rutwik-m.is-a.dev/" target="_blank" rel="noopener noreferrer">Rutwik</a>
+  </p>
+</footer>
+
 
 <script>
   // Prevent the "Hard Refresh stuck in middle" bug 
